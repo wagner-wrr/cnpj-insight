@@ -2,41 +2,19 @@
 
 
 
-Sistema profissional de consulta de CNPJ desenvolvido em Python utilizando FastAPI.
+Sistema profissional para consulta de CNPJ desenvolvido em Python com FastAPI.
 
 
 
-\## Objetivo
+\## Status
 
 
 
-Este projeto tem como objetivo fornecer uma plataforma moderna para consulta de empresas brasileiras utilizando a API pública do CNPJ.
+🚧 Em desenvolvimento
 
 
 
-\## Tecnologias
-
-
-
-\- Python
-
-\- FastAPI
-
-\- SQLite
-
-\- SQLModel
-
-\- Jinja2
-
-\- HTMX
-
-\- Tailwind CSS
-
-\- httpx
-
-
-
-\## Funcionalidades
+\## Objetivos
 
 
 
@@ -48,29 +26,25 @@ Este projeto tem como objetivo fornecer uma plataforma moderna para consulta de 
 
 \- Dashboard
 
-\- Exportação PDF
-
-\- Exportação Excel
-
-\- Exportação CSV
+\- Exportação de dados
 
 \- JSON Viewer
 
-\- Comparador de Empresas
+\- Comparador de empresas
 
 
 
-\## Status
+\## Tecnologias
 
 
 
-🚧 Em desenvolvimento.
+\- Python
 
+\- FastAPI
 
+\- SQLModel
 
-\## Autor
+\- SQLite
 
-
-
-Wagner Rodrigues
+\- HTTPX
 

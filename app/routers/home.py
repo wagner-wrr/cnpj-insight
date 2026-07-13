@@ -1,11 +1,13 @@
 from fastapi import APIRouter
 
-router = APIRouter()
+router = APIRouter(tags=["Home"])
 
-@router.get ("/")
+
+@router.get("/")
 def home():
+    """Rota inicial da aplicação."""
     return {
-        "projeto": "CNPJ Insigth",
+        "application": "CNPJ Insight",
+        "status": "running",
         "version": "0.1.0",
-        "status": "Online 🚀"
     }
