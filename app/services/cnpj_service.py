@@ -5,7 +5,7 @@ import httpx
 from app.core.config import settings
 
 class CNPJNotFoundError(Exception):
-    """Exceção lançada quando o CNPJ não é encontrado."""
+    """Exceção lançada quando o CNPJ não é encontrado na API pública."""
     
 class CNPJAPIError(Exception):
     """Exceção lançada quando ocorre uma falha na API de CNPJ."""

@@ -18,7 +18,7 @@ service = CNPJService()
 
 @router.get("/{cnpj}", response_model=dict[str, Any])
 def consultar_cnpj(cnpj: str) -> dict[str, Any]:
-    """Consulta os dados de uma empresa pelo CNPJ na API pública."""
+    """Consulta os dados de uma empresa pelo CNPJ."""
 
     try:
         return service.consultar(cnpj)
