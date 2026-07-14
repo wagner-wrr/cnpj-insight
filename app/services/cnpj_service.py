@@ -4,6 +4,8 @@ import httpx
 
 from app.core.config import settings
 
+from app.utils.cnpj_valida import limpar_cnpj, validar_cnpj
+
 class CNPJNotFoundError(Exception):
     """Exceção lançada quando o CNPJ não é encontrado na API pública."""
     
@@ -20,13 +22,13 @@ class CNPJService:
     def consultar(self, cnpj: str) -> dict[str, Any]:
         """Consulta um CNPJ na API pública."""
 
-        cnpj_limpo = self._limpar_cnpj(cnpj)
+        cnpj_limpo = limpar_cnpj(cnpj)
 
-        if len(cnpj_limpo) != 14:
+        if not validar_cnpj(cnpj_limpo):
             raise ValueError(
-                "CNPJ inválido. Deve conter 14 dígitos."
-            )
-
+                "CNPJ inválido. Certifique-se de fornecer um CNPJ válido."
+            )    
+        
         url = f"{self.base_url}/{cnpj_limpo}"
 
         try:
@@ -61,14 +63,4 @@ class CNPJService:
             raise CNPJAPIError(
                 "Não foi possível conectar à API pública."
             ) from exc
-
-    @staticmethod
-    def _limpar_cnpj(cnpj: str) -> str:
-        """Remove caracteres não numéricos do CNPJ."""
-
-        return "".join(
-            caractere 
-            for caractere in cnpj 
-            if caractere.isdigit()
-        )
         
