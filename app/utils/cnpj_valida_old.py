@@ -29,21 +29,34 @@ def validar_cnpj(cnpj: str) -> bool:
     """
     cnpj = limpar_cnpj(cnpj)
 
-    if len(cnpj) != 14 or cnpj in (c * 14 for c in "1234567890"):
+    if len(cnpj) != 14:
         return False
 
-    def calcular_digito(cnpj: str, peso: list) -> int:
-        soma = sum(
-            int(digito) * peso[i] 
-            for i, digito in enumerate(cnpj)
+    if cnpj == cnpj[0] * 14:
+        return False
+
+    pesos1 = [5,4,3,2,9,8,7,6,5,4,3,2]
+    pesos2 = [6,5,4,3,2,9,8,7,6,5,4,3,2]
+
+    soma = sum(
+        int(numero) * peso
+        for numero, peso in zip(cnpj[:12], pesos1)
+    )
+
+    resto = soma % 11
+
+    primeiro = 0 if resto < 2 else 11 - resto
+
+    soma = sum(
+        int(numero) * peso
+        for numero, peso in zip(
+            cnpj[:12] + str(primeiro),
+            pesos2,
         )
-        resto = soma % 11
-        return 0 if resto < 2 else 11 - resto
+    )
 
-    peso1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
-    peso2 = [6] + peso1[:-1]
+    resto = soma % 11
 
-    digito1 = calcular_digito(cnpj[:12], peso1)
-    digito2 = calcular_digito(cnpj[:12] + str(digito1), peso2)
+    segundo = 0 if resto < 2 else 11 - resto
 
-    return cnpj[-2:] == f"{digito1}{digito2}"
+    return cnpj[-2:] == f"{primeiro}{segundo}"

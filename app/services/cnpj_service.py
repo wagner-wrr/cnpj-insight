@@ -4,7 +4,7 @@ import httpx
 
 from app.core.config import settings
 
-from app.utils.cnpj_valida import limpar_cnpj, validar_cnpj
+from app.utils.cnpj import limpar_cnpj, validar_cnpj
 
 class CNPJNotFoundError(Exception):
     """Exceção lançada quando o CNPJ não é encontrado na API pública."""
