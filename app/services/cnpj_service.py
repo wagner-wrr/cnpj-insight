@@ -79,6 +79,7 @@ class CNPJService:
             uf=estado.get("sigla", "")
         )
 
+
         consulta_salva = self.repository.salvar(consulta)
 
         return {
@@ -92,6 +93,7 @@ class CNPJService:
             "consulta_em":consulta_salva.consulta_em.isoformat(),
         }
     
+
     def listar_hitorico(self, limite: int = 20) -> list[Consulta]:
         """Retorna o hitórico de consultas realizadas."""
         return self.repository.listar(limite=limite)
