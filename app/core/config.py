@@ -1,3 +1,5 @@
+
+from datetime import timezone, timedelta
 from functools import lru_cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -15,6 +17,13 @@ class Settings(BaseSettings):
 
     debug: bool = True
 
+    TIMEZONE_OFFSET:int =-3 #Horas em relação ao UTC (-3 = Brasília)
+
+    @property
+    def tz(self) ->timezone:
+        """Retorna o fuso horário configurado como objeto timezone"""
+        return timezone(timedelta(hours=self.TIMEZONE_OFFSET))
+    
     model_config = SettingsConfigDict(
         env_file=".env",
         case_sensitive=False

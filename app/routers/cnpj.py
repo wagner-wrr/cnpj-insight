@@ -1,42 +1,103 @@
 from typing import Any
 
-from fastapi import APIRouter, HTTPException, status    
+from fastapi import APIRouter,Depends, HTTPException, Query, status
+from sqlmodel import Session    
 
-from app.services.cnpj_service import (
-    CNPJAPIError,
-    CNPJNotFoundError, 
-    CNPJService,  
-)
+from app.database.connection import get_session
+from app.models.consulta import Consulta
+from app.repositories.consulta_repository import ConsultaRepository
+from app.services.cnpj_service import CNPJAPIError, CNPJNotFoundError, CNPJService
 
 router = APIRouter(
     prefix="/cnpj",
     tags=["CNPJ"],
 )
 
-service = CNPJService()
+@router.get("/historico", response_model=list[Consulta])
+def listar_historico(
+    limite: int = Query(default=20, ge=1, le=100),
+    session:Session = Depends(get_session),
+) -> list[Consulta]:
+    """Lista o histórico de consultas realizadas, da mais recente para a mais antiga."""
+    repository = ConsultaRepository(session)
+    service = CNPJService(repository=repository)
+    return service.listar_hitorico(limite=limite)
 
+@router.get("/estatisticas")
+def estatisticas(
+    session: Session = Depends(get_session),
+) -> dict:
+    """Retorna estatísticas das consultas realizadas."""
 
+    repository = ConsultaRepository(session)
+    service = CNPJService(repository=repository)
+    return service.obter_estatisticas()
+
+@router.get("/favoritos", response_model=list[Consulta])
+def listar_favoritos(
+    limite: int = Query(default=20, ge=1, le=100),
+    session: Session = Depends(get_session),
+    ) -> list[Consulta]:
+    """Lista os CNPJs favoritados"""
+    repository = ConsultaRepository(session)
+    service = CNPJService(repository=repository)
+    return service.listar_favoritos(limite=limite)
+
+@router.get("/{cnpj}/favoritar")
+def favoritar(
+    cnpj: str,
+    session: Session = Depends(get_session),
+) -> dict:
+    """Marca um CNPJ como favorito."""
+    repository = ConsultaRepository(session)
+    service = CNPJService(repository=repository)
+
+    cnpj_limpo = cnpj.replace(".", "").replace("/", "").replace("-","")
+
+    try:
+        return service.favoritar(cnpj_limpo)
+    except CNPJNotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc),
+        ) from exc
+    
+@router.get("/{cnpj}/desfavoritar")
+def defavoritar(
+    cnpj: str, 
+    session: Session = Depends(get_session),
+) -> dict:
+    """Remove um CNPJ dos favoritos."""
+    repository = ConsultaRepository(session)
+    service = CNPJService(repository=repository)
+
+    cnpj_limpo = cnpj.replace(".", "").replace("/", "").replace("-","")
+
+    try:
+        return service.desfavoritar(cnpj_limpo)
+    except CNPJNotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc),
+        ) from exc
+    
 @router.get("/{cnpj}", response_model=dict[str, Any])
-def consultar_cnpj(cnpj: str) -> dict[str, Any]:
-    """Consulta os dados de uma empresa pelo CNPJ."""
+def consultar_cnpj(
+    cnpj: str,
+    session: Session = Depends(get_session),
+) ->dict[str, Any]:
+    repository = ConsultaRepository(session)
+    service = CNPJService(repository=repository)
 
     try:
         return service.consultar(cnpj)
-    
     except CNPJNotFoundError as exc:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=str(exc),
-        ) from exc
-    
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc),
+        )from exc
+    except CNPJAPIError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY, detail=str(exc),
+            )from exc
     except ValueError as exc:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(exc),
-        )
-  
-    except RuntimeError as exc:
-        raise HTTPException(
-            status_code=status.HTTP_502_BAD_GATEWAY,
-            detail=str(exc),
-        )
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)
+        )from exc
