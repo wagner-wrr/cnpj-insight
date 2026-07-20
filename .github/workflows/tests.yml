@@ -2,15 +2,9 @@ name: Testes e Cobertura
 
 on:
   push:
-    branches:
-      - main
-      - master
-      - develop
+    branches: [main, master, develop]
   pull_request:
-    branches:
-      - main
-      - master
-      - develop
+    branches: [main, master, develop]
 
 jobs:
   tests:
@@ -32,6 +26,9 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov
 
+      - name: Exibir versão do Python
+        run: python --version
+
       - name: Rodar testes com cobertura
         run: |
-          pytest --cov=app --cov-report=term-missing --cov-fail-under=70
+          pytest -v --tb=short --cov=app --cov-report=term-missing --cov-fail-under=80
