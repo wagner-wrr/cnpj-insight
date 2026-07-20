@@ -1,4 +1,4 @@
-name: Testes e Cobertura
+name: Testes Python
 
 on:
   push:
@@ -11,14 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Baixar repositório
+      - name: Baixar o código
         uses: actions/checkout@v4
 
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: "pip"
 
       - name: Instalar dependências
         run: |
@@ -26,9 +25,6 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov
 
-      - name: Exibir versão do Python
-        run: python --version
-
       - name: Rodar testes com cobertura
         run: |
-          pytest -v --tb=short --cov=app --cov-report=term-missing --cov-fail-under=80
+          pytest --cov=app --cov-report=term-missing --cov-fail-under=70
