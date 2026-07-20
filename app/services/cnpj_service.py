@@ -7,6 +7,7 @@ from app.models.consulta import Consulta
 from app.repositories.consulta_repository import ConsultaRepository
 from app.utils.cnpj import limpar_cnpj, validar_cnpj
 
+
 class CNPJNotFoundError(Exception):
     """Exceção lançada quando o CNPJ não é encontrado na API pública."""
     

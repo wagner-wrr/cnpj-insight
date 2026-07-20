@@ -4,6 +4,7 @@ from sqlmodel import Field, SQLModel
 
 from app.core.config import settings
 
+
 class Consulta(SQLModel, table=True):
     """Representa uma consulta de CNPj realizada"""
 

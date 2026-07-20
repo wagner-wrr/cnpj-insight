@@ -4,9 +4,6 @@ from sqlmodel import Session, SQLModel, create_engine
 
 from app.core.config import settings
 
-from app.models.consulta import Consulta
-
-
 connect_args = {
     "check_same_thread": False,
 }

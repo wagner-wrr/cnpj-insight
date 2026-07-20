@@ -1,6 +1,6 @@
 from app.models.consulta import Consulta
 from app.repositories.consulta_repository import ConsultaRepository
-from app.routers.cnpj import favoritar
+
 
 def test_salvar_persiste_consulta(session_test):
     repository = ConsultaRepository(session_test)

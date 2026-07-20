@@ -3,8 +3,10 @@ from unittest.mock import Mock
 import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import Session, SQLModel, create_engine
+
 from app.database.connection import get_session
 from app.main import app
+
 
 @pytest.fixture(autouse=True)
 def override_get_sessio():

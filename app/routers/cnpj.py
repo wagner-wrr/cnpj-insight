@@ -1,11 +1,12 @@
 from typing import Any
 
-from fastapi import APIRouter,Depends, HTTPException, Query, status
-from sqlmodel import Session    
+from fastapi import APIRouter, Depends, HTTPException, Query, status
+from sqlmodel import Session
 
 from app.database.connection import get_session
 from app.models.consulta import Consulta
 from app.repositories.consulta_repository import ConsultaRepository
+from app.schemas.consulta import ConsultaResponse
 from app.services.cnpj_service import CNPJAPIError, CNPJNotFoundError, CNPJService
 
 router = APIRouter(
@@ -13,7 +14,7 @@ router = APIRouter(
     tags=["CNPJ"],
 )
 
-@router.get("/historico", response_model=list[Consulta])
+@router.get("/historico", response_model=list[ConsultaResponse])
 def listar_historico(
     limite: int = Query(default=20, ge=1, le=100),
     session:Session = Depends(get_session),
@@ -33,7 +34,7 @@ def estatisticas(
     service = CNPJService(repository=repository)
     return service.obter_estatisticas()
 
-@router.get("/favoritos", response_model=list[Consulta])
+@router.get("/favoritos", response_model=list[ConsultaResponse])
 def listar_favoritos(
     limite: int = Query(default=20, ge=1, le=100),
     session: Session = Depends(get_session),

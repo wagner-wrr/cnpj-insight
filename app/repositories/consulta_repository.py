@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import func
-from sqlmodel import Session, select, func
+from sqlmodel import Session, select
 
 from app.core.config import settings
 from app.models.consulta import Consulta
@@ -26,7 +26,10 @@ class ConsultaRepository:
         """Retorna as consultas mas recentes"""
         return self.session.exec(
             select(Consulta)
-            .order_by(Consulta.consulta_em.desc())
+            .order_by(
+                Consulta.consulta_em.desc(),
+                Consulta.id.desc(),     
+            )
             .limit(limite)
         ).all()
     

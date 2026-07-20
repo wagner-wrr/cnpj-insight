@@ -1,4 +1,4 @@
-from app.utils.cnpj import limpar_cnpj, calcular_digito, validar_cnpj
+from app.utils.cnpj import calcular_digito, limpar_cnpj, validar_cnpj
 
 
 def test_limpar_cnpj_com_mascara() -> None:

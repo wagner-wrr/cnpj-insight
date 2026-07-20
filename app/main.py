@@ -9,6 +9,7 @@ from app.routers.cnpj import router as cnpj_router
 from app.routers.health import router as health_router
 from app.routers.home import router as home_router
 
+
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:  
     """Executa tarefas de inicialização e encerramento."""

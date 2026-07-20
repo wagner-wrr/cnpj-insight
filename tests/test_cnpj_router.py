@@ -1,5 +1,6 @@
 from app.services.cnpj_service import CNPJAPIError, CNPJNotFoundError, CNPJService
 
+
 def test_historico_retorna_200_e_lista(client, monkeypatch):
     def fake_listar_historico(self, limite=20):
         assert limite == 20

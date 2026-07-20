@@ -11,6 +11,7 @@ from app.services.cnpj_service import (
     CNPJService,
 )
 
+
 @patch("app.services.cnpj_service.validar_cnpj", return_value=True)
 @patch("app.services.cnpj_service.limpar_cnpj", return_value="11222333000181")
 @patch("app.services.cnpj_service.httpx.get")
@@ -220,7 +221,9 @@ def test_desfavoritar_lanca_erro_quando_cnpj_nao_esta_favoritado():
 
     service = CNPJService(repository=repository)
 
-    with pytest.raises(CNPJNotFoundError, match="não está favoritado ou não encontrado"):
+    with pytest.raises(
+        CNPJNotFoundError, 
+        match="não favoritado ou não encontrado"):
         service.desfavoritar("11222333000181")
 
 def test_listar_favoritos_delega_para_repository():
