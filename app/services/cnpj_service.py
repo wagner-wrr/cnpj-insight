@@ -17,8 +17,11 @@ class CNPJAPIError(Exception):
 class CNPJService:
     """Serviço responsável por consultar CNPJs."""
 
-    def __init__(self, repository=None):
-        self.repository = repository or ConsultaRepository()
+    def __init__(
+            self, 
+            repository: ConsultaRepository,
+        ) -> None:
+        self.repository = repository
         self.base_url = settings.api_url.rstrip("/")
         self.timeout = getattr(settings, "api_timeout", 10.0)
 
@@ -98,7 +101,7 @@ class CNPJService:
     def obter_estatisticas(self) -> dict:
         """Retorna estatísticas das consultas."""
         return self.repository.estatisticas()
-    def favoritar(self, cnpj: str) -> dict | None:
+    def favoritar(self, cnpj: str) -> dict:
         """Marca um CNPJ como favorito."""
         consulta = self.repository.favoritar(cnpj)
         if not consulta:
