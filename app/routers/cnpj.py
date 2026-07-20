@@ -21,7 +21,7 @@ def listar_historico(
     """Lista o histórico de consultas realizadas, da mais recente para a mais antiga."""
     repository = ConsultaRepository(session)
     service = CNPJService(repository=repository)
-    return service.listar_hitorico(limite=limite)
+    return service.listar_historico(limite=limite)
 
 @router.get("/estatisticas")
 def estatisticas(
@@ -43,7 +43,7 @@ def listar_favoritos(
     service = CNPJService(repository=repository)
     return service.listar_favoritos(limite=limite)
 
-@router.get("/{cnpj}/favoritar")
+@router.post("/{cnpj}/favoritar")
 def favoritar(
     cnpj: str,
     session: Session = Depends(get_session),
@@ -61,8 +61,8 @@ def favoritar(
             status_code=status.HTTP_404_NOT_FOUND, detail=str(exc),
         ) from exc
     
-@router.get("/{cnpj}/desfavoritar")
-def defavoritar(
+@router.post("/{cnpj}/desfavoritar")
+def desfavoritar(
     cnpj: str, 
     session: Session = Depends(get_session),
 ) -> dict:

@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from sqlalchemy import func
 from sqlmodel import Session, select, func
 
 from app.core.config import settings
@@ -36,6 +37,12 @@ class ConsultaRepository:
             select(func.count(Consulta.id))
         ).one()
 
+        total_favoritos = self.session.exec(
+        select(func.count())
+        .select_from(Consulta)
+        .where(Consulta.favorito.is_(True))
+        ).one()
+
         hoje = datetime.now(settings.tz).date()
         consultas_hoje = self.session.exec(
             select(func.count(Consulta.id))
@@ -67,6 +74,7 @@ class ConsultaRepository:
 
         return{
             "total_consultas": total,
+            "total_favoritos": total_favoritos,
             "consultas_hoje": consultas_hoje,
             "por_uf":[
                 {"uf": uf or "N/I", "total":total_uf}
@@ -91,7 +99,7 @@ class ConsultaRepository:
         ).first()
 
         if consulta:
-            Consulta.favorito = True
+            consulta.favorito = True
             self.session.commit()
             self.session.refresh(consulta)
 

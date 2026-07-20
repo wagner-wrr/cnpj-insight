@@ -16,14 +16,10 @@ class CNPJAPIError(Exception):
 class CNPJService:
     """Serviço responsável por consultar CNPJs."""
 
-    def __init__(
-        self,
-        repository: ConsultaRepository,
-        timeout: float = 10.0
-    ) -> None:
-        self.repository = repository
-        self.timeout = timeout
+    def __init__(self, repository=None):
+        self.repository = repository or ConsultaRepository()
         self.base_url = settings.api_url.rstrip("/")
+        self.timeout = getattr(settings, "api_timeout", 10.0)
 
     def consultar(self, cnpj: str) -> dict[str, Any]:
         """Consulta um CNPJ na API pública."""
@@ -94,7 +90,7 @@ class CNPJService:
         }
     
 
-    def listar_hitorico(self, limite: int = 20) -> list[Consulta]:
+    def listar_historico(self, limite: int = 20) -> list[Consulta]:
         """Retorna o hitórico de consultas realizadas."""
         return self.repository.listar(limite=limite)
     
