@@ -223,7 +223,7 @@ def test_desfavoritar_lanca_erro_quando_cnpj_nao_esta_favoritado():
 
     with pytest.raises(
         CNPJNotFoundError, 
-        match="não favoritado ou não encontrado"):
+        match="não está favoritado ou não encontrado"):
         service.desfavoritar("11222333000181")
 
 def test_listar_favoritos_delega_para_repository():
