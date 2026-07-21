@@ -1,44 +1,50 @@
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 *$py.class
-*.so
-.Python
+
+# Distribuição / build
 build/
-develop-eggs/
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
 *.egg-info/
-.installed.cfg
-*.egg
 
-# Virtual Environment
-.venv/
-venv/
-ENV/
+# Testes e cobertura
+.pytest_cache/
+.coverage
+htmlcov/
 
-# Banco de dados SQLite
+# Type checking
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Arquivos de ambiente
+.env
+.env.*
+!.env.example
+
+# Banco local
 *.db
 *.sqlite3
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
+# Logs e temporários
+*.log
+tmp/
+temp/
 
-# Variáveis de ambiente
-.env
-.env.local
-
-# OS
+# Sistema operacional
 .DS_Store
 Thumbs.db
