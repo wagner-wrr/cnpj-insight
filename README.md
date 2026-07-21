@@ -143,7 +143,7 @@ cnpj-insight/
 Clone o projeto:
 
 ```bash
-git clone https://github.com/SEU-USUARIO/cnpj-insight.git
+git clone https://github.com/wagner-wrr/cnpj-insight.git
 ```
 
 Entre no diretório:
@@ -215,11 +215,20 @@ Swagger
 http://localhost:8000/docs
 ```
 
+![Imagem Swegger](https://github.com/wagner-wrr/cnpj-insight/blob/main/assents/images/Swegger%20-%201.jpeg)
+
 ReDoc
 
 ```
 http://localhost:8000/redoc
 ```
+
+![Imagem Redocs](https://github.com/wagner-wrr/cnpj-insight/blob/main/assents/images/Redocs%20-1.jpeg)
+![Imagem Redocs](https://github.com/wagner-wrr/cnpj-insight/blob/main/assents/images/Redocs%20-%202.jpeg)
+![Imagem Redocs](https://github.com/wagner-wrr/cnpj-insight/blob/main/assents/images/Redocs%20-%203.jpeg)
+![Imagem Redocs](https://github.com/wagner-wrr/cnpj-insight/blob/main/assents/images/Redocs%20-%204.jpeg)
+![Imagem Redocs](https://github.com/wagner-wrr/cnpj-insight/blob/main/assents/images/Redocs%20-%205.jpeg)
+![Imagem Redocs](https://github.com/wagner-wrr/cnpj-insight/blob/main/assents/images/Redocs%20-%206.jpeg)
 
 ---
 
@@ -320,7 +329,7 @@ Consulte o arquivo **LICENSE** para mais informações.
 **Python FullStack Developer**
 
 GitHub:
-https://github.com/SEU-USUARIO
+https://github.com/wagner-wrr
 
 LinkedIn:
-https://linkedin.com/in/SEU-USUARIO
+https://linkedin.com/in/wagner-wrr
